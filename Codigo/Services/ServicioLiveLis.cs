@@ -24,11 +24,11 @@ namespace DM_MICROS_ESV60.Services
             client = new RestClient(options);
         }
 
-        public void EnviarResultados(ResultadoAnalito resultado)
+        public void EnviarResultados(ResultadoAnalito resultado, string tokenObtenido)
         {
             try
             {
-                string token = ObtenerToken();
+                string token = tokenObtenido;
                 if (token != null)
                 {
                     EjecutarMensajeEstadosTerminal("Enviando resultados...", EnumEstados.Process);
@@ -89,7 +89,7 @@ namespace DM_MICROS_ESV60.Services
                 log.RegistraEnLog($"Error en EnviarResultados: {ex.Message}", nombreLog);
             }
         }
-        private string ObtenerToken()
+        public string ObtenerToken()
         {
             try
             {

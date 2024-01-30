@@ -233,6 +233,7 @@ namespace DM_MICROS_ESV60.Forms
         private void Log(LogMsgType msgtype, string msg)
         {
             string tipomsg = "";
+            string tokenObtenido = "";
 
             if (msgtype.ToString() == "Outgoing") { tipomsg = "Enviado"; }
             if (msgtype.ToString() == "Incoming") { tipomsg = "Recibido"; }
@@ -326,7 +327,10 @@ namespace DM_MICROS_ESV60.Forms
                     log.RegistraEnLog(" Paquete Recibido " + Convert.ToString(x) + " --> " + ArrPaqueteResultado[x], InterfaceConfig.nombreLog);
                 }
 
-                ProcesarResultados(ArrPaqueteResultado.ToList());
+                //Obtener Token
+                tokenObtenido = servicioLiveLis.ObtenerToken();
+                ProcesarResultados(ArrPaqueteResultado.ToList(), tokenObtenido);
+
                 strLineaResultado = "";
                 VariablesGlobal.Conectar = false;
                 MensajesEstadosTerminal("", EnumEstados.Empty);
@@ -570,7 +574,7 @@ namespace DM_MICROS_ESV60.Forms
         #endregion
 
         #region Metodos formulario resultados
-        public string ProcesarResultados(List<string> PaqueteResultado)
+        public string ProcesarResultados(List<string> PaqueteResultado, string tokenObtenido)
         {
             MensajesEstadosTerminal("Inicio de procesamiento de resultados",EnumEstados.Process);
 
@@ -631,7 +635,7 @@ namespace DM_MICROS_ESV60.Forms
                             resultadoAnalitoJson.reactive = InterfaceConfig.reactive;
                             resultadoAnalitoJson.result = resultadoAnalito;
 
-                            servicioLiveLis.EnviarResultados(resultadoAnalitoJson);
+                            servicioLiveLis.EnviarResultados(resultadoAnalitoJson, tokenObtenido);
                             continue;
                         }
                         catch (Exception ex)
