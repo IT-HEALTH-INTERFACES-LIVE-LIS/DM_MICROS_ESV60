@@ -17,4 +17,4 @@ _Interfaz DM_MICROS_ESV60 para integrar los clientes que usen Live LIS
 
 ### Version 📌
 
- * _1.0.0_
+ * _1.0.1_
